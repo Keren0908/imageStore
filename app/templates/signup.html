@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<head>
+    <title>Sign Up</title>
+    <link href="https://fonts.googleapis.com/css?family=Exo+2|Geo|Indie+Flower|Play" rel="stylesheet">
+    <style type="text/css">
+    body{
+        background: url({{img5}});
+        background-repeat: no-repeat;
+        
+        background-position: 80% -10%;
+    }
+    h1{
+    font-family: 'Play', sans-serif;
+    font-size: 2.5em;
+    padding-top:5%;
+    padding-bottom: 10%;
+    padding-left:20%;
+    text-transform: uppercase;
+    }
+    form{
+         font-family: 'Play', sans-serif;
+         padding-left:20%;
+         color:black;
+    }
+    
+    
+    div{
+        padding-top: 0px;
+        padding-bottom:10px;
+    }
+    </style>
+</head>
+<html>
+<body>
+
+<h1>Sign Up</h1>
+
+<form method='post' action='signup_submit'>
+
+    <div>
+    <label for="username">Username:</label>
+    <input name="username" id="username" type="text" placeholder="akaya" required>
+    </div>
+    
+    <div>
+        <label for="male">Male</label>
+        <input name="gender" id="male" type="radio" value="male">
+        <label for="female">Female</label>
+        <input name="gender" id="female" type="radio" value="female">
+        <label for="other">Other</label>
+        <input name="gender" id="other" type="radio" value="other">
+    </div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input name="email" id="email" type="email" placeholder="your email" required>
+        <label for="pw">Password:</label>
+        <input name="password" id="pw" type="password" placeholder="your password" pattern=".{5,10}" required title="Password must be between 5 and 10 characters."> 
+    </div>
+
+    <div>
+        <label>Birthday:
+        <select name="Month" placeholder="Month">
+            <optgroup>Month</optgroup>
+            <option >Jan</option>
+            <option >Feb</option>
+            <option >Mar</option>
+            <option >Apr</option>
+            <option >May</option>
+            <option >Jun</option>
+            <option >Jul</option>
+            <option >Aug</option>
+            <option >Sept</option>
+            <option >Oct</option>
+            <option >Nov</option>
+            <option >Dec</option>
+        </select>
+        <select name="Day">
+            <option >Day</option>
+        </select>
+        <select name="Year">
+            <option >Year</option>
+        </select>
+        </label>
+    </div>
+
+    <div>
+    <label for="agree">I agree to the terms and conditions</label>
+    <input name="conditions" id="agree" type="checkbox" value="yes">
+    </div>
+ 
+    <div>
+    <button>Submit</button>
+    </div>
+    
+</form>
+
+</body>
+</html>

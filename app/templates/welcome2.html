@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image Store</title>
+	<link href="https://fonts.googleapis.com/css?family=Exo+2|Geo|Indie+Flower|Play" rel="stylesheet">
+	
+	<style type="text/css">
+	div:nth-of-type(1){
+		padding-left:33%;
+		
+	}
+	h1{
+	font-family: 'Play', sans-serif;
+	font-size: 2.5em;
+	margin-left:1%;
+	position: 10%;
+	text-transform: uppercase;
+	text-align: center;
+
+}
+	a{
+		font-family: 'Play', sans-serif;
+		color:black;
+		margin-left: 10px;
+		margin-right: 10px;
+		padding:8px 25px 8px 25px;
+		position: center;
+	}
+	div:nth-of-type(3){
+		text-align: center;
+	}
+
+
+
+	</style>
+
+
+</head>
+
+	<body>
+		<div>
+			<img src="{{img1}}">
+		</div>
+		
+		<div class="title">
+			<h1>IMAGE STORE</h1>
+		</div>
+
+		
+		<div class="sign">
+			<a  class="signin" href="{{ url_for('signin')}}">Sign In</a>
+			<a  class="signup" href="{{ url_for('signup')}}">Sign Up</a>
+		</div>
+
+		
+	
+			
+		
+	</body>
+</html>
+
