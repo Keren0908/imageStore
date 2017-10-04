@@ -1,9 +1,9 @@
-from flask import render_template
-from flask_login import login_required, current_user
+from flask import render_template, redirect, url_for, request, flash
+from flask_login import login_required, login_user, logout_user, current_user
 
 from . import app, db
 from .models import User
-from .forms import UsernameEmailPasswordForm
+from .forms import SignUpForm
 
 @app.route('/')
 @app.route('/welcome')
@@ -16,16 +16,16 @@ def signin():
 
 @app.route('/signup',methods=["GET","POST"])
 def signup():
-	form = UsernameEmailPasswordForm()
+	form = SignUpForm()
 	if form.validate_on_submit():
 		user = User(username=form.username.data, password=form.password.data,email=form.email.data)
 		db.session.add(user)
 		db.session.commit()
-		return redirect(url_for('signin')
-	return render_template("signup.html",form=form)
+		return redirect(url_for('home',username=db.query.first()))
+	return render_template('signup.html',form=form)
 
 
 @app.route('/home/<username>')
 def home(username):
-	pass
+	return "Sign in as % s" %username
 
