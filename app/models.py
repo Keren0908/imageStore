@@ -1,6 +1,7 @@
 from . import bcrypt, db
-
 from sqlalchemy.ext.hybrid import hybrid_property
+
+
 
 class User(db.Model):
 
@@ -8,17 +9,25 @@ class User(db.Model):
 
 	# Columns
 	id=db.Column(db.Integer, primary_key=True, autoincrement=True)
-	username = db.Column(db.String(128), unique=True, nullable=False)
-	password = db.Column(db.String(), nullable=False)
-	email=db.Column(db.String(),unique=True, nullable=False)
+	username = db.Column(db.String(64), nullable=False)
+	password = db.Column(db.String(64), nullable=False)
+	email = db.Column(db.String(128),unique=True, nullable=False)
 
-	@hybrid_property
-	def password(self):
-		return self.password
+	def __init__(self, username, password,email):
+		self.username = username
+		self.password = self._set_password(password)
+		self.email = email
+	
 
-	@password.setter
+	
 	def _set_password(self,plaintext):
-		self.password=bcrypt.generate_password_hash(plaintext)
+		return bcrypt.generate_password_hash(plaintext)
 
 	def is_correct_password(self, plaintext):
 		return bcrypt.check_password_hash(self.password, plaintext)
+
+	
+		
+
+	def __repr__(self):
+		return self.username

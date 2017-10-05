@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, flash
+from flask import render_template, redirect, url_for, request, flash, session
 from flask_login import login_required, login_user, logout_user, current_user
 
 from . import app, db
@@ -14,18 +14,24 @@ def welcome():
 def signin():
 	return render_template("signin.html")
 
-@app.route('/signup',methods=["GET","POST"])
+@app.route('/signup',methods=["GET"])
 def signup():
-	form = SignUpForm()
-	if form.validate_on_submit():
-		user = User(username=form.username.data, password=form.password.data,email=form.email.data)
-		db.session.add(user)
-		db.session.commit()
-		return redirect(url_for('home',username=db.query.first()))
-	return render_template('signup.html',form=form)
+	return render_template("signup.html")
+
+@app.route('/signup',methods=['POST'])
+def signup_submit():
+	username=request.form.get('username')
+	password=request.form.get('password')
+	email=request.form.get('email')
+	user = User(username,password,email)
+
+	db.session.add(user)
+	db.session.commit()
+	return redirect(url_for('home',username=username))
+	
 
 
-@app.route('/home/<username>')
+@app.route('/home/<username>',methods=['GET','POST'])
 def home(username):
-	return "Sign in as % s" %username
+	return "dfdd %s" %username
 

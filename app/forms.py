@@ -8,6 +8,6 @@ from .models import User
 
 class SignUpForm(Form):
 	username = StringField('Username', validators=[DataRequired()])
-	email = StringField('Email',validators=[DataRequired(),Email(),Unique(User,User.email,message='There is already an account with the email.')])
 	password= PasswordField('Password', validators=[DataRequired()])
+	email = StringField('Email',validators=[DataRequired(),Email(),Unique(User,User.email,message='There is already an account with the email.')])
 
