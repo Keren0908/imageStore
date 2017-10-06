@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, flash, session
 from flask_login import login_required, login_user, logout_user, current_user
 
-from . import app, db
+from . import app, db, login_manager
 from .models import User
 from .forms import SignUpForm
 
@@ -12,7 +12,19 @@ def welcome():
 
 @app.route('/signin',methods=["GET","POST"])
 def signin():
+	if request.method == 'POST':
+		username=request.form.get('username')
+		password=request.form.get('password')
+		user = User.query.filter_by(username=username).all()
+		if user is not None:
+			for u in user:
+				if u.is_correct_password(password):
+					login_user(u)
+					flash("Sign in successfully.")
+					return redirect(url_for('home',username=username))
 	return render_template("signin.html")
+
+
 
 @app.route('/signup',methods=["GET"])
 def signup():
@@ -33,5 +45,5 @@ def signup_submit():
 
 @app.route('/home/<username>',methods=['GET','POST'])
 def home(username):
-	return "dfdd %s" %username
+	return "Home  %s" %username
 
