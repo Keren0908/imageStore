@@ -26,21 +26,25 @@ def signin():
 
 
 
-@app.route('/signup',methods=["GET"])
+@app.route('/signup',methods=["GET","POST"])
 def signup():
-	return render_template("signup.html")
-
-@app.route('/signup',methods=['POST'])
-def signup_submit():
-	username=request.form.get('username')
-	password=request.form.get('password')
-	email=request.form.get('email')
-	user = User(username,password,email)
-
-	db.session.add(user)
-	db.session.commit()
-	return redirect(url_for('home',username=username))
+	form = SignUpForm(request.form)
+	if form.validate_on_submit():
+		username=form.username.data
+		password=form.password.data
+		email=form.email.data
+		user = User(username,password,email)
+		db.session.add(user)
+		db.session.commit()
+		flash("Sign up successfully.")
+		return redirect(url_for('home',username=username))
 	
+	return render_template("signup.html",form=form)
+
+
+@app.route('/signup/error',methods=['GET','POST'])
+def signup_error():
+	return "There exists an account with this email."
 
 
 @app.route('/home/<username>',methods=['GET','POST'])

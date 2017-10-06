@@ -35,7 +35,7 @@
 
 <h1>Sign Up</h1>
 
-<form method='post' action="{{url_for('signup_submit')}}">
+<form method='post' action="">
     <div>
     <label for="username">Username</label>:
     <input name="username" id="username" type="text" placeholder="akaya" required>
@@ -91,6 +91,7 @@
     <div>
     <button>Submit</button>
     </div>
+    {{ form.csrf_token }}
     
 </form>
 
