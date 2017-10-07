@@ -27,4 +27,5 @@ def load_user(userid):
 
 
 from app import views
+from app.pictures import upload
 

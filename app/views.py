@@ -50,6 +50,7 @@ def signup():
 			return redirect(url_for("signup_error1"))
 	return render_template("signup.html")
 
+
 @app.route('/signin/error',methods=['GET','POST'])
 def signin_error1():
 	return "Please check your log in information!"
@@ -64,7 +65,7 @@ def signup_error2():
 	return "This email has been used."
 
 
-@app.route('/home/<username>',methods=['GET','POST'])
+@app.route('/<username>/home',methods=['GET','POST'])
 def home(username):
 	return "Home  %s" %username
 
