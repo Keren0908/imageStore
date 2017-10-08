@@ -1,4 +1,9 @@
-from flask import render_template, redirect, url_for, request, flash, session
+
+import os
+from werkzeug import secure_filename
+from wand.image import Image
+
+from flask import render_template, redirect, url_for, request, flash, session,send_from_directory
 from flask_login import login_required, login_user, logout_user, current_user
 
 from . import app, db, login_manager
@@ -64,8 +69,30 @@ def signup_error1():
 def signup_error2():
 	return "This email has been used."
 
+#---------------picture upload--------------
+
+ALLOWED_EXTENSIONS=set(['png','jpg','jpeg','gif'])
 
 @app.route('/<username>/home',methods=['GET','POST'])
 def home(username):
 	return "Home  %s" %username
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.',1)[1] in ALLOWED_EXTENSIONS
+
+@app.route('/homepage',methods=['GET','POST'])
+def upload():
+	if request.method=='POST':
+		file=request.files['file']
+		if file and allowed_file(file.filename):
+			filename=secure_filename(file.filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+			return redirect(url_for('upload_file',filename=filename))
+	return render_template( 'homepage.html')
+
+@app.route('/homeimg/<filename>',methods=['GET','POST'])
+def upload_file(filename):
+	img=url_for('static',filename=filename)
+	return render_template('homepage.html',img=img)
+	
 

@@ -9,6 +9,10 @@ app = Flask(__name__, instance_relative_config = True)
 app.config.from_object('config')
 app.config.from_pyfile('config.py')
 
+
+
+app.config['UPLOAD_FOLDER']='/Users/akayayy/Documents/ut_course/ECE1779/project/assignment1/imageStore/app/static/image'
+
 db = SQLAlchemy(app)
 
 bcrypt=Bcrypt(app)
@@ -27,5 +31,5 @@ def load_user(userid):
 
 
 from app import views
-from app.pictures import upload
+
 
