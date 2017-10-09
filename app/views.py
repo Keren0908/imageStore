@@ -90,10 +90,17 @@ def home(username):
 	
 	user_id = current_user.get_id()
 
+	# imglist=[]
+	# userimg=db.session.query(saveImage).filter_by(username=user_id).all()
+	# for item in userimg:
+		# imglist.append(item.image_path)
+
+	#show thumbnail:
 	imglist=[]
-	userimg=db.session.query(saveImage).filter_by(username=user_id).all()
-	for item in userimg:
-		imglist.append(item.image_path)
+	imgs=db.session.query(saveImage).filter_by(username=user_id).all()
+	for img in imgs:
+		imglist.append(img.resize_path)
+
 
 	return render_template('homepage.html',imglist=imglist)
 	
@@ -115,27 +122,71 @@ def upload():
 
 			path=os.path.join(app.config['UPLOAD_FOLDER'],user_id)
 
-			if not os.path.exists(path):
-				os.makedirs(path)
+			origin_path=path+'/origin'
+			resize_path=path+'/resize'
+			rotate_path=path+'/rotate'
+			threshold_path=path+'/threshold'
+			blur_path=path+'/blur'
+			flop_path=path+'/flop'
+				
+			if not os.path.exists(origin_path):
+				os.makedirs(origin_path)
+			if not os.path.exists(resize_path):
+				os.makedirs(resize_path)
+			if not os.path.exists(rotate_path):
+				os.makedirs(rotate_path)
+			if not os.path.exists(threshold_path):
+				os.makedirs(threshold_path)
+			if not os.path.exists(blur_path):
+				os.makedirs(blur_path)
+			if not os.path.exists(flop_path):
+				os.makedirs(flop_path)
 
-			filepath=os.path.join(path,filename)
-			db_path='image/'+user_id+'/'+filename
+
 			
-			saveimage=saveImage(user_id,db_path)
 			
-			if db.session.query(saveImage).filter_by(username=user_id,image_path=db_path).first() is None:
+			db_origin_path='image/'+user_id+'/origin/'+filename
+			db_resize_path='image/'+user_id+'/resize/'+filename
+			db_rotate_path='image/'+user_id+'/rotate/'+filename
+			db_blur_path='image/'+user_id+'/blur/'+filename
+			db_flop_path='image/'+user_id+'/flop/'+filename
+			
+			filepath=origin_path+'/'+filename
+			saveimage=saveImage(user_id,db_origin_path,db_resize_path,db_rotate_path,db_blur_path,db_flop_path)
+			
+			if db.session.query(saveImage).filter_by(username=user_id,origin_path=db_origin_path).first() is None:
 				file.save(filepath)
 				db.session.add(saveimage)
 				db.session.commit()
 
+				with Image(filename=filepath) as img:
+					with img.clone() as i:
+						i.resize(int(200),int(i.height * 200/i.width))
+						i.save(filename=resize_path+'/'+filename)
+					with img.clone() as i:
+						i.rotate(90)
+						i.save(filename=rotate_path+'/'+filename)
+					with img.clone() as i:
+						i.flop()
+						i.save(filename=flop_path+'/'+filename)
+					with img.clone() as i:
+						i.gaussian_blur(2,1)
+						i.save(filename=blur_path+'/'+filename)
+
+
+
+			#thumbnails
 			imglist=[]
-			userimg=db.session.query(saveImage).filter_by(username=user_id).all()
-			for item in userimg:
-				imglist.append(item.image_path)
+			imgs=db.session.query(saveImage).filter_by(username=user_id).all()
+			for img in imgs:
+				imglist.append(img.resize_path)
 
 			return render_template('homepage.html',imglist=imglist)
 	return render_template('homepage.html')
 
-
+@app.route('/test')
+@login_required
+def test():
+	return "just for test"
 	
 

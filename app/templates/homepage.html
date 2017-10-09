@@ -20,7 +20,7 @@
 	</form>
 	
 	{% for img in imglist %}
-	<img src="{{url_for('static',filename=img)}}" width="100" height="100" />
+	<a href="{{url_for('test')}}"><img src="{{url_for('static',filename=img)}}" /></a>
 	{% endfor %}
 
 	<form action='welcome'>

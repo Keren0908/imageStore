@@ -27,11 +27,10 @@ class User(db.Model,UserMixin):
 	def is_correct_password(self, plaintext):
 		return bcrypt.check_password_hash(self.password, plaintext)
 
-	
-		
-
 	def __repr__(self):
 		return self.username
+
+		
 
 class saveImage(db.Model,UserMixin):
 
@@ -39,9 +38,21 @@ class saveImage(db.Model,UserMixin):
 
 	id=db.Column(db.Integer, primary_key=True, autoincrement=True)
 	username=db.Column(db.String(64),nullable=False)
-	image_path=db.Column(db.String(1024),unique=True,nullable=False)
+	origin_path=db.Column(db.String(1024),unique=True,nullable=False)
+	resize_path=db.Column(db.String(1024),unique=True,nullable=False)
+	rotate_path=db.Column(db.String(1024),unique=True,nullable=False)
+	blur_path=db.Column(db.String(1024),unique=True,nullable=False)
+	flop_path=db.Column(db.String(1024),unique=True,nullable=False)
 
-	def __init__(self,username,image_path):
+
+
+
+	def __init__(self,username,origin_path,resize_path,rotate_path,blur_path,flop_path):
 		self.username=username
-		self.image_path=image_path
+		self.origin_path=origin_path
+		self.resize_path=resize_path
+		self.rotate_path=rotate_path
+		self.blur_path=blur_path
+		self.flop_path=flop_path
+		
 
