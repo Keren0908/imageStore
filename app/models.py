@@ -32,3 +32,16 @@ class User(db.Model,UserMixin):
 
 	def __repr__(self):
 		return self.username
+
+class saveImage(db.Model,UserMixin):
+
+	__tablename__='user_image'
+
+	id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+	username=db.Column(db.String(64),nullable=False)
+	image_path=db.Column(db.String(1024),unique=True,nullable=False)
+
+	def __init__(self,username,image_path):
+		self.username=username
+		self.image_path=image_path
+

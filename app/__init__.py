@@ -11,7 +11,7 @@ app.config.from_pyfile('config.py')
 
 
 
-app.config['UPLOAD_FOLDER']='/Users/akayayy/Documents/ut_course/ECE1779/project/assignment1/imageStore/app/static/image'
+app.config['UPLOAD_FOLDER']='app/static/image'
 
 db = SQLAlchemy(app)
 

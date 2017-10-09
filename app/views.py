@@ -7,7 +7,7 @@ from flask import render_template, redirect, url_for, request, flash, session,se
 from flask_login import login_required, login_user, logout_user, current_user
 
 from . import app, db, login_manager
-from .models import User
+from .models import User,saveImage
 from .forms import SignUpForm
 
 @app.route('/')
@@ -23,7 +23,7 @@ def signin():
 		user = User.query.filter_by(username=username).first()
 		
 		if user.is_correct_password(password):
-			login_user(u)
+			login_user(user)
 			flash("Sign in successfully.")
 			return redirect(url_for('home',username=username))
 		else :
@@ -32,6 +32,11 @@ def signin():
 	return render_template("signin.html")
 
 
+@app.route('/logout')
+@login_required
+def logout():
+	logout_user()
+	return redirect(url_for('welcome'))
 
 @app.route('/signup',methods=["GET","POST"])
 def signup():
@@ -50,10 +55,16 @@ def signup():
 				db.session.add(user)
 				db.session.commit()
 				flash("Sign up successfully.")
-				return redirect(url_for('home',username=username))
+				return redirect(url_for('signin'))
 		elif db.session.query(User).filter_by(username=username).first() is not None:
 			return redirect(url_for("signup_error1"))
 	return render_template("signup.html")
+
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 @app.route('/signin/error',methods=['GET','POST'])
@@ -74,25 +85,57 @@ def signup_error2():
 ALLOWED_EXTENSIONS=set(['png','jpg','jpeg','gif'])
 
 @app.route('/<username>/home',methods=['GET','POST'])
+@login_required
 def home(username):
-	return "Home  %s" %username
+	
+	user_id = current_user.get_id()
+
+	imglist=[]
+	userimg=db.session.query(saveImage).filter_by(username=user_id).all()
+	for item in userimg:
+		imglist.append(item.image_path)
+
+	return render_template('homepage.html',imglist=imglist)
+	
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.',1)[1] in ALLOWED_EXTENSIONS
 
-@app.route('/homepage',methods=['GET','POST'])
+@app.route('/upload',methods=['GET','POST'])
+@login_required
 def upload():
+	if current_user.is_authenticated and request.method == 'POST':
+		user_id = current_user.get_id()
+
 	if request.method=='POST':
 		file=request.files['file']
 		if file and allowed_file(file.filename):
 			filename=secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-			return redirect(url_for('upload_file',filename=filename))
-	return render_template( 'homepage.html')
 
-@app.route('/homeimg/<filename>',methods=['GET','POST'])
-def upload_file(filename):
-	img=url_for('static',filename=filename)
-	return render_template('homepage.html',img=img)
+
+			path=os.path.join(app.config['UPLOAD_FOLDER'],user_id)
+
+			if not os.path.exists(path):
+				os.makedirs(path)
+
+			filepath=os.path.join(path,filename)
+			db_path='image/'+user_id+'/'+filename
+			
+			saveimage=saveImage(user_id,db_path)
+			
+			if db.session.query(saveImage).filter_by(username=user_id,image_path=db_path).first() is None:
+				file.save(filepath)
+				db.session.add(saveimage)
+				db.session.commit()
+
+			imglist=[]
+			userimg=db.session.query(saveImage).filter_by(username=user_id).all()
+			for item in userimg:
+				imglist.append(item.image_path)
+
+			return render_template('homepage.html',imglist=imglist)
+	return render_template('homepage.html')
+
+
 	
 

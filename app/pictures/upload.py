@@ -26,5 +26,4 @@ def upload():
 @app.route('/homeimg/<filename>')
 def upload_file(filename):
 	image = send_from_directory(app.config['UPLOAD_FOLDER'],filename)
-	
-	return image
+	return im
