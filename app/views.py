@@ -13,7 +13,7 @@ from .forms import SignUpForm
 @app.route('/')
 @app.route('/welcome')
 def welcome():
-	return render_template("welcome2.html")
+	return render_template("welcome.html")
 
 @app.route('/signin',methods=["GET","POST"])
 def signin():
@@ -99,7 +99,7 @@ def home(username):
 	imglist=[]
 	imgs=db.session.query(saveImage).filter_by(username=user_id).all()
 	for img in imgs:
-		imglist.append(img.resize_path)
+		imglist.append(img.origin_path)
 
 
 	return render_template('homepage.html',imglist=imglist)
@@ -161,7 +161,7 @@ def upload():
 
 				with Image(filename=filepath) as img:
 					with img.clone() as i:
-						i.resize(int(200),int(i.height * 200/i.width))
+						i.resize(int(300),int(i.height * 300/i.width))
 						i.save(filename=resize_path+'/'+filename)
 					with img.clone() as i:
 						i.rotate(90)
@@ -179,7 +179,7 @@ def upload():
 			imglist=[]
 			imgs=db.session.query(saveImage).filter_by(username=user_id).all()
 			for img in imgs:
-				imglist.append(img.resize_path)
+				imglist.append(img.origin_path)
 
 			return render_template('homepage.html',imglist=imglist)
 	return render_template('homepage.html')
