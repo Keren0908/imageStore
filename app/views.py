@@ -96,13 +96,19 @@ def home(username):
 		# imglist.append(item.image_path)
 
 	#show thumbnail:
+	#thumbnails
 	imglist=[]
 	imgs=db.session.query(saveImage).filter_by(username=user_id).all()
 	for img in imgs:
-		imglist.append(img.origin_path)
+		transformation=[]
+		transformation.append(img.origin_path)
+		transformation.append(img.rotate_path)
+		transformation.append(img.blur_path)
+		transformation.append(img.flop_path)
+		imglist.append(transformation)
 
 
-	return render_template('homepage.html',imglist=imglist)
+	return render_template('homepage.html',imglist=imglist,user_id=user_id)
 	
 
 def allowed_file(filename):
@@ -179,14 +185,18 @@ def upload():
 			imglist=[]
 			imgs=db.session.query(saveImage).filter_by(username=user_id).all()
 			for img in imgs:
-				imglist.append(img.origin_path)
+				transformation=[]
+				transformation.append(img.origin_path)
+				transformation.append(img.rotate_path)
+				transformation.append(img.blur_path)
+				transformation.append(img.flop_path)
+				imglist.append(transformation)
 
-			return render_template('homepage.html',imglist=imglist)
+			return render_template('homepage.html',imglist=imglist,user_id=user_id)
 	return render_template('homepage.html')
 
-@app.route('/test')
-@login_required
-def test():
-	return "just for test"
+@app.route('/link')
+def link():
+	return render_template('link.html')
 	
 

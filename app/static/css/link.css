@@ -7,13 +7,13 @@
 		border-color: rgba(0,0,0,.075);
 
 	}
-	body .navbar-default .navbar-brand{
+	.navbar-default .navbar-brand{
 		color:black;
 	}
 	.navbar-brand{
 		font-size: 2em;
 		/*font-family: 'Shadows Into Light', cursive;*/
-		/*font-family: 'Indie Flower', cursive;*/
+		font-family: 'Indie Flower', cursive;
 	}
 
 	.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
@@ -24,8 +24,6 @@
 		color:black;
 	}
 
-
-
-
-
-/* Style the Image Used to Trigger the Modal */
+body{
+	font-family: 'Indie Flower', cursive;
+}

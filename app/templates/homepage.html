@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Home</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Exo|Indie+Flower|Nova+Flat|Shadows+Into+Light" rel="stylesheet">
@@ -14,11 +15,16 @@
   margin-top: 10px;
   margin-bottom: 10px
 }*/
+
+body{
+  font-family: 'Indie Flower', cursive;
+}
 .img-responsive{
   max-width:100%;
   max-height: 100%;
   display: unset;
 }
+
 .border{
   
   height:200px;
@@ -28,7 +34,74 @@
 }
 
 
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
 
+/* Modal Content (Image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 50%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption { 
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
 
 </style>
 <body>
@@ -59,22 +132,29 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+
 <div class="container">
-  <h2>
-    {% if current_user.is_authenticated %}
-    Hi {{current_user.username }}
-    {% endif %}
-  </h2>
-  <form action="/upload" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-      <label for="exampleInputFile">Select File</label>
-      <input type="file" id="exampleInputFile" name="file">
-      <p class="help-block">Only 'png' 'jpg' 'jpeg' 'gif' can be selected</p>
-    </div>
-    <button type="submit" class="btn btn-default" value="Upload">Upload</button>
+  <div class="jumbotron">
+      <h1>
+        {% if current_user.is_authenticated %}
+        Hi {{current_user.username }}
+        {% endif %}
+      </h1>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="exampleInputFile">Select File</label>
+        <input type="file" id="exampleInputFile" name="file">
+        <p class="help-block">Only 'png' 'jpg' 'jpeg' 'gif' can be selected</p>
+      </div>
+      <button type="submit" class="btn btn-default" value="Upload">Upload</button>
   </form>
+    </div>
 </div>
+
+
+
 <hr>
+<input id="user_id" type="text" value="{{user_id}}" name="user_id" hidden>
 
 
 
@@ -82,18 +162,73 @@
 <div class="row">
   {% for img in imglist %}
   <div class="col-md-3 col-sm-6 col-xs-12 border">
-    
-      <a href="#">
-      <img src="{{url_for('static',filename=img)}}" class="img-responsive img-thumbnail" >
-      </a> 
+      <div class="thumbnails">
+      <img id="img" src="{{url_for('static',filename=img[0])}}" name="{{img[1]}}" alt="{{img[2]}}"   class="img-responsive img-thumbnail">
+      <input class="flop" type="text" name="{{img[3]}}" hidden>
+
+
+      <div id="myModal" class="modal">
+
+        <!-- The Close Button -->
+        <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="rotate">
+        <img class="modal-content" id="flop">
+        <img class="modal-content" id="blur">
+
+      </div>
+    </div>
   </div>
   {% endfor %}
 </div>
 </div>
 
 
+<!-- Trigger the Modal -->
 
-  <!-- <a href="{{url_for('test')}}"><img src="{{url_for('static',filename=img)}}" /></a> -->
+
+<!-- The Modal -->
+
+
+
+
+<script>
+
+var userid=document.getElementById('user_id');
+var thumbnails=document.getElementsByClassName('thumbnails');
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+for(var i=0;i<thumbnails.length;i++){
+  img = thumbnails[i].getElementsByTagName('img')[0];
+  modal = thumbnails[i].getElementsByClassName('modal')[0];
+  modalImg_rotate = thumbnails[i].getElementsByClassName("modal-content")[0];
+  modalImg_flop =thumbnails[i].getElementsByClassName("modal-content")[1];
+  modalImg_blur =thumbnails[i].getElementsByClassName("modal-content")[2];
+  transform=thumbnails[i].getElementsByClassName("flop")[0];
+
+  img.onclick = function(){
+      modal.style.display = "block";
+      modalImg_rotate.src = "../static/"+this.name
+      modalImg_flop.src = "../static/"+this.alt;
+      modalImg_blur.src = "../static/"+transform.name;
+
+    }
+  
+
+// Get the <span> element that closes the modal
+var span = thumbnails[i].getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+    modal.style.display = "none";
+}
+}
+
+</script>
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" >
+
 
 </body>
 </html>
