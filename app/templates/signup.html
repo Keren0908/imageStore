@@ -79,12 +79,21 @@
   						<button type="submit" class="btn btn-default btn-lg">Submit</button>
   						<div><a class="mylink" href="{{url_for('signin')}}">Already have an account?</a></div>
 					</form>
+					{% if error %}
+					<input class="error" type="text" value="true" hidden>
+					{% endif %}
 					
 				</div>
 			</div>
 			<div class="col-xs-4"></div>
 		</div>
 </div>
+
+<script>
+var error=document.getElementsByClassName('error')
+if(error.value)
+	alert("error!")
+</script>
 
 
 <script src="https://code.jquery.com/jquery-2.2.4.js"></script>

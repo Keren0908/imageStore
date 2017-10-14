@@ -42,6 +42,7 @@ def logout():
 def signup():
 	#form = SignUpForm(request.form)
 	#if form.validate_on_submit():
+	error="false"
 	if request.method=='POST':
 		username=request.form.get('username')
 		password=request.form.get('password')
@@ -50,14 +51,14 @@ def signup():
 
 		if db.session.query(User).filter_by(username=username).first() is None:
 			if db.session.query(User).filter_by(email=email).first() is not None:
-				return redirect(url_for("signup_error2"))
+				return render_template('error.html',error="This email has been used.")
 			elif db.session.query(User).filter_by(email=email).first() is None:
 				db.session.add(user)
 				db.session.commit()
 				flash("Sign up successfully.")
 				return redirect(url_for('signin'))
 		elif db.session.query(User).filter_by(username=username).first() is not None:
-			return redirect(url_for("signup_error1"))
+			return render_template('error.html',error="This username has been registered.")
 	return render_template("signup.html")
 
 
