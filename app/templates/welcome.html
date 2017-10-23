@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>IMAGE STORE</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Exo|Indie+Flower|Nova+Flat|Shadows+Into+Light" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/welcome.css')}}">
-	
-	<style type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IMAGE STORE</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Exo|Indie+Flower|Nova+Flat|Shadows+Into+Light" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/welcome.css')}}">
+    
+    <style type="text/css">
 
-		html{
-			height:100%;
-			font-size:2em;
-		}
-		body{
-			background: url('static/background/55562470_p0_master1200.jpg');
-			background-size:cover;
-			background-position: center;
-			color:white;
-			font-family: 'Indie Flower', cursive;
-			font-size:20px;
-			padding-bottom: 70px;
-		}
-		.test{
-			text-align: center;
-		}
+        html{
+            height:100%;
+            font-size:2em;
+        }
+        body{
+            background: url('static/background/55562470_p0_master1200.jpg');
+            background-size:cover;
+            background-position: center;
+            color:white;
+            font-family: 'Indie Flower', cursive;
+            font-size:20px;
+            padding-bottom: 70px;
+        }
+        .test{
+            text-align: center;
+        }
 
-	</style>
-	
+    </style>
+    
 </head>
 <body>
 
-	
+    
 <br>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -61,25 +61,25 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-	<div class="container">
-		<div class="row setblank"></div>
-		<div class="row">
-			<div class="col-xs-4"></div>
-			<div class="col-xs-4 setbackground">
-				<div id="content">
-					<h1>Image Store</h1>
-					<h2>
-						Save your photographs in Image Store and
-						<p>browse them from your device, anywhere</p>
-					</h2>
-					<hr>
-					<a class="btn btn-default btn-lg" href="{{ url_for('signup')}}" role="button">Sign Up</a>
-					<a class="btn btn-default btn-lg" href="{{ url_for('signin')}}" role="button">Sign In</a>
-				</div>
-			</div>
-			<div class="col-xs-4"></div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row setblank"></div>
+        <div class="row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4 setbackground">
+                <div id="content">
+                    <h1>Image Store</h1>
+                    <h2>
+                        Save your photographs in Image Store and
+                        <p>browse them from your device, anywhere</p>
+                    </h2>
+                    <hr>
+                    <a class="btn btn-default btn-lg" href="{{ url_for('signup')}}" role="button">Sign Up</a>
+                    <a class="btn btn-default btn-lg" href="{{ url_for('signin')}}" role="button">Sign In</a>
+                </div>
+            </div>
+            <div class="col-xs-4"></div>
+        </div>
+    </div>
 
  
   <nav class="navbar navbar-default navbar-fixed-bottom test">

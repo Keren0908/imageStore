@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Sign Up</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Exo|Indie+Flower|Nova+Flat|Shadows+Into+Light" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/signup.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Exo|Indie+Flower|Nova+Flat|Shadows+Into+Light" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/signup.css')}}">
 
-	<style type="text/css">
+    <style type="text/css">
 
-		html{
-			height:100%;
-			font-size:2em;
-		}
-		body{
-			background: url('static/background/47390939_p0.jpg');
-			background-size:cover;
-			background-position: center;
-			color:white;
-			font-family: 'Indie Flower', cursive;
-			font-size:20px;
-		}
-		a{
-			color:white;
-		}
-	</style>
+        html{
+            height:100%;
+            font-size:2em;
+        }
+        body{
+            background: url('static/background/47390939_p0.jpg');
+            background-size:cover;
+            background-position: center;
+            color:white;
+            font-family: 'Indie Flower', cursive;
+            font-size:20px;
+        }
+        a{
+            color:white;
+        }
+    </style>
 </head>
 <body>
 
 <br>
 <nav class="navbar navbar-default">
-  	<div class="container-fluid">
+    <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -43,56 +43,56 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-   	 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-     	 <ul class="nav navbar-nav">
-       	 	<li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-        	<li><a href="#">Contact</a></li>
-     	 </ul>
+     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Contact</a></li>
+         </ul>
       
      <!--  <ul class="nav navbar-nav navbar-right">
                <li><a href="#">Sign Up</a></li>
                <li><a href="#">Sign In</a></li>
       </ul> -->
-  	  </div><!-- /.navbar-collapse -->
-  	</div><!-- /.container-fluid -->
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
 </nav>
 
 <div class="container">
-	<div class="row setblank"></div>
-		<div class="row">
-			<div class="col-xs-4"></div>
-			<div class="col-xs-4 setbackground">
-				<div id="content">
-					<h1>Sign Up</h1>
-					<form method='post' action="">
-  						<div class="form-group">
-  							<label for="exampleInputName2">Username</label>
-    						<input type="text" class="form-control" id="exampleInputName2" placeholder="akaya" name="username">
-   							<label for="exampleInputEmail1">Email</label>
-   							<input type="email" class="form-control" id="exampleInputEmail1" placeholder="aka@mail.com" name="email" required>
- 						 </div>
- 						 <div class="form-group">
- 			   				<label for="exampleInputPassword1">Password</label>
-    						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" pattern=".{5,10}" required title="Password must be between 5 and 10 characters.">
-  						</div>
+    <div class="row setblank"></div>
+        <div class="row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4 setbackground">
+                <div id="content">
+                    <h1>Sign Up</h1>
+                    <form method='post' action="">
+                        <div class="form-group">
+                            <label for="exampleInputName2">Username</label>
+                            <input type="text" class="form-control" id="exampleInputName2" placeholder="akaya" name="username">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="aka@mail.com" name="email" required>
+                         </div>
+                         <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" pattern=".{5,10}" required title="Password must be between 5 and 10 characters.">
+                        </div>
   
-  						<button type="submit" class="btn btn-default btn-lg">Submit</button>
-  						<div><a class="mylink" href="{{url_for('signin')}}">Already have an account?</a></div>
-					</form>
-					{% if error %}
-					<input class="error" type="text" value="true" hidden>
-					{% endif %}
-					
-				</div>
-			</div>
-			<div class="col-xs-4"></div>
-		</div>
+                        <button type="submit" class="btn btn-default btn-lg">Submit</button>
+                        <div><a class="mylink" href="{{url_for('signin')}}">Already have an account?</a></div>
+                    </form>
+                    {% if error %}
+                    <input class="error" type="text" value="true" hidden>
+                    {% endif %}
+                    
+                </div>
+            </div>
+            <div class="col-xs-4"></div>
+        </div>
 </div>
 
 <script>
 var error=document.getElementsByClassName('error')
 if(error.value)
-	alert("error!")
+    alert("error!")
 </script>
 
 

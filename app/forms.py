@@ -7,7 +7,7 @@ from .models import User
 
 
 class SignUpForm(Form):
-	username = StringField('Username', validators=[Required()])
-	password= PasswordField('Password', validators=[Required()])
-	email = StringField('Email',validators=[Required(),Email(),Unique(User,User.email,message='There is already an account with the email.')])
+    username = StringField('Username', validators=[Required()])
+    password= PasswordField('Password', validators=[Required()])
+    email = StringField('Email',validators=[Required(),Email(),Unique(User,User.email,message='There is already an account with the email.')])
 
